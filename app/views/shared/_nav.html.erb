@@ -1,0 +1,8 @@
+<nav class="flex">
+  <% if user_signed_in? %>
+    <%= current_user.name %>
+    <%= button_to 'Logout', destroy_user_session_path, method: :delete %>
+  <% else %>
+    <span>Guest</span>
+  <% end %>
+</nav>
