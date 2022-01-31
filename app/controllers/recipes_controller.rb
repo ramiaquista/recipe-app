@@ -19,7 +19,8 @@ class RecipesController < ApplicationController
 
   # POST /recipes or /recipes.json
   def create
-    @recipe = Recipe.new(recipe_params)
+    @recipe = Recipe.new recipe_params.merge(user_id: current_user.id)
+    @food = Food.new food_params.merge(user_id: current_user.id)
 
     respond_to do |format|
       if @recipe.save
@@ -53,6 +54,11 @@ class RecipesController < ApplicationController
       format.html { redirect_to recipes_url, notice: 'Recipe was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def public_recipes
+    @recipes = Recipe.includes(:user).where("user_id = #{current_user.id}").or(Recipe.where('public = true'))
+    print @recipes
   end
 
   private
