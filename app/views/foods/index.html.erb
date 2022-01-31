@@ -2,7 +2,7 @@
 
 <div class="title-container flex">
   <h1>Foods</h1>
-  <%= button_to "New food", new_food_path %>
+  <%= button_to "New food", new_food_path, method: :get %>
 </div>
 
 <% unless @foods.empty? %>
@@ -21,7 +21,11 @@
           <td><%= food.name%></td>
           <td><%= food.measurement_unit%></td>
           <td>$ <%= food.price%></td>
-          <td><%= link_to "Delete", food %></td>
+          <% if can? :manage, food%>
+            <td><%= link_to "Delete", food %></td>
+          <% else %>
+            <td> - </td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
