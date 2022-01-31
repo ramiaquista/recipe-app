@@ -16,12 +16,12 @@
 
 .flex {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 nav {
   padding: 0 0 !important;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .menu-container {
@@ -70,4 +70,9 @@ nav a {
 
 nav a:hover {
   text-decoration: underline;
+}
+
+.title-container {
+  justify-content: space-between;
+  align-items: center !important;
 }
