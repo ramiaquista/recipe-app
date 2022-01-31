@@ -6,4 +6,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "foods#index"
+  delete '/foods/:id', to: 'food#destroy', as: "delete_food"
 end
