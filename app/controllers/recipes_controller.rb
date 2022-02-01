@@ -20,7 +20,6 @@ class RecipesController < ApplicationController
   # POST /recipes or /recipes.json
   def create
     @recipe = Recipe.new recipe_params.merge(user_id: current_user.id)
-    @food = Food.new food_params.merge(user_id: current_user.id)
 
     respond_to do |format|
       if @recipe.save

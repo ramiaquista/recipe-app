@@ -16,11 +16,11 @@
     <tbody>
       <% @foods.each do |food| %>
         <tr>
-          <td><%= food.name%></td>
-          <td><%= food.measurement_unit%></td>
-          <td>$ <%= food.price%></td>
+          <td class="t-name"><%= food.name%></td>
+          <td class="t-measurement_unit"><%= food.measurement_unit%></td>
+          <td class="t-price">$ <%= food.price%></td>
           <% if can? :manage, food%>
-            <td><%= button_to "Delete",  delete_food_path(food.id), method: :delete %></td>
+            <td><%= button_to "Delete",  delete_food_path(food.id), method: :delete, class: "delete-btn"%></td>
           <% else %>
             <td> - </td>
           <% end %>
