@@ -11,6 +11,8 @@ class RecipesController < ApplicationController
   # GET /recipes/1 or /recipes/1.json
   def show
     @recipe = Recipe.includes(:foods, :recipe_foods).find(params[:id])
+    @foods_id_from_recipe = @recipe.foods.collect { |f| f.id }
+    @foods_own = Food.where("user_id = #{current_user.id}")
   end
 
   # GET /recipes/new

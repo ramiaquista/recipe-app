@@ -27,3 +27,23 @@ nav {
 nav > span {
   padding-right: 40px;
 }
+
+.space-between {
+  justify-content: space-between;
+}
+
+hr {
+  width: calc(50% + 10vw);
+}
+
+.btn-manage {
+  gap: 30px;
+}
+
+#food-select {
+  width: auto;
+}
+
+#qtt-field {
+  width: 25%;
+}

@@ -19,3 +19,5 @@ recipe2 = Recipe.create(name: "apple candy", preparation_time: 10, cooking_time:
 recipe2.recipe_foods.create(quantity: 1, food_id: 1)
 recipe2.recipe_foods.create(quantity: 100, food_id: 3)
 recipe2.save
+user2 = User.create(name: "Maria", email: "maria@mail.com", password: "qwe123")
+user2.save
