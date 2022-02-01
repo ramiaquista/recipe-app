@@ -9,5 +9,21 @@ class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
 
-  # Add more helper methods to be used by all tests here...
+  if ENV['BULLET']
+    module MiniTestWithBullet
+      def before_setup
+        Bullet.start_request
+        super if defined?(super)
+      end
+  
+      def after_teardown
+        super if defined?(super)
+        Bullet.end_request
+      end
+    end
+  
+    class ActiveSupport::TestCase
+      include MiniTestWithBullet
+    end
+  end
 end
