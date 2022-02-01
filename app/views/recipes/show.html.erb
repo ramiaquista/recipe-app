@@ -7,49 +7,45 @@
   <%= button_to "Create New Food", new_food_path %>
 </div>
 <hr/>
-<% unless @recipe.foods.empty?%>
-  <table>
-    <thead>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Total Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @recipe.recipe_foods.where(recipe_id: @recipe.id).each do |rf| %>
       <tr>
-        <th>Name</th>
-        <th>Quantity</th>
-        <th>Total Price</th>
-        <th>Actions</th>
+        <td><%= rf.food.name %></td>
+        <td><%= rf.quantity %> <%= rf.food.measurement_unit %></td>
+        <td>$ <%= (rf.food.price * rf.quantity).round(2) %></td>
+        <% if can? :manage, rf.food %>
+          <td class="flex btn-manage">
+            <%= button_to "Modify", edit_recipe_food_path(rf), method: :get %>
+            <%= button_to "Remove", rf, { :method => :delete, :onclick => "setTimeout(() => { this.parentNode.parentNode.parentNode.remove();}, 100);" } %> <%# %>
+          </td>
+        <% else %>
+          <td> - </td>
+        <% end %>
       </tr>
-    </thead>
-    <tbody>
-      <% @recipe.recipe_foods.where(recipe_id: @recipe.id).each do |r| %>
-        <tr>
-          <td><%= r.food.name %></td>
-          <td><%= r.quantity %> <%= r.food.measurement_unit %></td>
-          <td>$ <%= (r.food.price * r.quantity).round(2) %></td>
-          <% if can? :manage, r.food %>
-            <td class="flex btn-manage">
-              <%= button_to "Modify", food_path(r.food.id), method: :update %>
-              <%= button_to "Remove", food_path(r.food.id), method: :delete %>
-            </td>
-          <% else %>
-            <td> - </td>
-          <% end %>
-        </tr>
-      <% end %>
-      <tr>
-        <td>
-          <%= select_tag "food-select", options_for_select(@foods_own.collect { |f| ["#{f.name} / #{f.measurement_unit}", f.id] unless @foods_id_from_recipe.include?(f.id) }.compact) %>
-        </td>
-        <td>
-          <%= number_field_tag("qtt-field", value=0, options = {step: 1}) %>
-        </td>
-        <td></td>
-        <td>
-          <%= button_to "Add new ingredient" %>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-<% else %>
-  <p>No foods available</p>
-<% end %>
+    <% end %>
+    <tr>
+      <td>
+        <%= select_tag "food-select", options_for_select(current_user.foods.collect { |f| ["#{f.name} / #{f.measurement_unit}", f.id] unless @foods_id_from_recipe.include?(f.id) }.compact) %>
+      </td>
+      <td>
+        <%= number_field_tag("qtt-field", value=0, options = {step: 1}) %>
+      </td>
+      <td></td>
+      <td>
+        <%= button_to "Add new ingredient" %>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <div>
   <%= link_to "Edit this recipe", edit_recipe_path(@recipe) %> |

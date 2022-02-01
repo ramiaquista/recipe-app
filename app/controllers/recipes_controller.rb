@@ -12,7 +12,6 @@ class RecipesController < ApplicationController
   def show
     @recipe = Recipe.includes(:foods, :recipe_foods).find(params[:id])
     @foods_id_from_recipe = @recipe.foods.collect(&:id)
-    @foods_own = Food.where("user_id = #{current_user.id}")
   end
 
   # GET /recipes/new
@@ -25,7 +24,7 @@ class RecipesController < ApplicationController
 
   # POST /recipes or /recipes.json
   def create
-    @recipe = Recipe.new(recipe_params)
+    @recipe = Recipe.new(recipe_params.merge(user_id: current_user.id))
 
     respond_to do |format|
       if @recipe.save

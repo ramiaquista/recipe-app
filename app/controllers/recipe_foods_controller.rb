@@ -5,7 +5,7 @@ class RecipeFoodsController < ApplicationController
 
   # GET /recipe_foods or /recipe_foods.json
   def index
-    @recipe_foods = RecipeFood.includes(:recipes, :foods).all
+    @recipe_foods = RecipeFood.includes(%i[recipe food]).all
   end
 
   # GET /recipe_foods/1 or /recipe_foods/1.json
@@ -49,11 +49,10 @@ class RecipeFoodsController < ApplicationController
 
   # DELETE /recipe_foods/1 or /recipe_foods/1.json
   def destroy
-    @recipe_food.destroy
-
-    respond_to do |format|
-      format.html { redirect_to recipe_foods_url, notice: 'Recipe food was successfully destroyed.' }
-      format.json { head :no_content }
+    if @recipe_food.destroy
+      flash.now[:notice] = 'The food from your recipe was successfully destroyed.'
+    else
+      flash.now[:alert] = 'Error trying to delete this food'
     end
   end
 
