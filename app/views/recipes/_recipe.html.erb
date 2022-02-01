@@ -31,7 +31,7 @@
   <% unless current_page?(:controller => 'recipes', :action => 'index') %>
     <p>
       <strong>Public:</strong>
-      <input type="checkbox" id="public" disabled checked=<%= recipe.public %> />
+      <%= check_box("public", recipe.id, {checked: recipe.public, disabled: true}) %>
     </p>
   <% end %>
 
