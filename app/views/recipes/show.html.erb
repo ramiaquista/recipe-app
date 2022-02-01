@@ -8,7 +8,7 @@
       <tr>
         <th>Name</th>
         <th>Quantity</th>
-        <th>Price</th>
+        <th>Total Price</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -17,9 +17,12 @@
         <tr>
           <td><%= r.food.name %></td>
           <td><%= r.quantity %></td>
-          <td>$ <%= r.food.price%></td>
-          <% if can? :manage, r %>
-            <td><%= button_to "Remove", food_path(r.food.id), method: :delete %></td>
+          <td>$ <%= (r.food.price * r.quantity).round(2) %></td>
+          <% if can? :manage, r.food %>
+            <td>
+              <%= button_to "Modify", food_path(r.food.id), method: :update %>
+              <%= button_to "Remove", food_path(r.food.id), method: :delete %>
+            </td>
           <% else %>
             <td> - </td>
           <% end %>
