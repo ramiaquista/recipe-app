@@ -12,9 +12,11 @@ class RecipesController < ApplicationController
   def show
     @recipe = Recipe.includes(:foods, :recipe_foods).find(params[:id])
     @foods_id_from_recipe = @recipe.foods.collect(&:id)
-    @food_options = current_user.foods.collect { |f| ["#{f.name} / #{f.measurement_unit}", f.id] unless @recipe.foods.collect(&:id).include?(f.id) }.compact
+    @current_food_options = current_user.foods.collect do |f|
+      ["#{f.name} / #{f.measurement_unit}", f.id] unless @recipe.foods.collect(&:id).include?(f.id)
+    end.compact
     session[:current_recipe] = @recipe
-    session[:current_food_options] = @food_options
+    session[:current_food_options] = @current_food_options
   end
 
   # GET /recipes/new

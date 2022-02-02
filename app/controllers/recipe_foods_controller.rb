@@ -23,11 +23,11 @@ class RecipeFoodsController < ApplicationController
 
   # POST /recipe_foods or /recipe_foods.json
   def create
-    if session[:current_recipe].nil? 
-      @recipe_food = RecipeFood.new(recipe_food_params)
-    else
-      @recipe_food = RecipeFood.new(recipe_food_params.merge(recipe_id: session[:current_recipe]['id']))
-    end
+    @recipe_food = if session[:current_recipe].nil?
+                     RecipeFood.new(recipe_food_params)
+                   else
+                     RecipeFood.new(recipe_food_params.merge(recipe_id: session[:current_recipe]['id']))
+                   end
     respond_to do |format|
       if @recipe_food.save
         format.html do

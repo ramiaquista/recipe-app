@@ -23,7 +23,14 @@
         <% if can? :manage, rf.food %>
           <td class="flex btn-manage">
             <%= button_to "Modify", edit_recipe_food_path(rf), method: :get %>
-            <%= button_to "Remove", rf, { :method => :delete, :onclick => "setTimeout(() => { this.parentNode.parentNode.parentNode.remove();}, 100);" } %>
+            <%= button_to "Remove", rf, {
+              :method => :delete,
+              :onclick => "setTimeout(() => {
+                this.parentNode.parentNode.parentNode.remove();
+                document.getElementById('food-fb').innerText = 'There is food available to add';
+                document.getElementById('btn-add-food').disabled = false;
+                }, 100);"
+            } %>
           </td>
         <% else %>
           <td> - </td>
@@ -32,19 +39,19 @@
     <% end %>
     <tr>
       <td>
-        <% if @food_options.empty? %>
-          No food available to add
+        <% if @current_food_options.empty? %>
+          <span id="food-fb">No food available to add</span>
         <% else %>
-          <%= select_tag "food-select", options_for_select(@food_options) %>
+          <span id="food-fb">There is food available to add</span>
         <% end %>
       </td>
       <td></td>
       <td></td>
       <td>
-        <% if @food_options.empty? %>
-          <%= button_to "Add new ingredient", {}, :disabled => true %>
+        <% if @current_food_options.empty? %>
+          <%= button_to "Add new ingredient", new_recipe_food_path, { :id => "btn-add-food", :method => :get, :disabled => true } %>
         <% else %>
-          <%= button_to "Add new ingredient", new_recipe_food_path, method: :get %>
+          <%= button_to "Add new ingredient", new_recipe_food_path, { :id => "btn-add-food", :method => :get } %>
         <% end %>
       </td>
     </tr>
