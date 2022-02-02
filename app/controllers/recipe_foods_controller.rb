@@ -6,6 +6,8 @@ class RecipeFoodsController < ApplicationController
   # GET /recipe_foods or /recipe_foods.json
   def index
     @recipe_foods = RecipeFood.includes(%i[recipe food]).all
+    session[:current_recipe] = nil
+    session[:current_food_options] = nil
   end
 
   # GET /recipe_foods/1 or /recipe_foods/1.json
@@ -21,8 +23,11 @@ class RecipeFoodsController < ApplicationController
 
   # POST /recipe_foods or /recipe_foods.json
   def create
-    @recipe_food = RecipeFood.new(recipe_food_params)
-
+    if session[:current_recipe].nil? 
+      @recipe_food = RecipeFood.new(recipe_food_params)
+    else
+      @recipe_food = RecipeFood.new(recipe_food_params.merge(recipe_id: session[:current_recipe]['id']))
+    end
     respond_to do |format|
       if @recipe_food.save
         format.html do

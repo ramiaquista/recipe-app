@@ -23,7 +23,7 @@
         <% if can? :manage, rf.food %>
           <td class="flex btn-manage">
             <%= button_to "Modify", edit_recipe_food_path(rf), method: :get %>
-            <%= button_to "Remove", rf, { :method => :delete, :onclick => "setTimeout(() => { this.parentNode.parentNode.parentNode.remove();}, 100);" } %> <%# %>
+            <%= button_to "Remove", rf, { :method => :delete, :onclick => "setTimeout(() => { this.parentNode.parentNode.parentNode.remove();}, 100);" } %>
           </td>
         <% else %>
           <td> - </td>
@@ -32,14 +32,20 @@
     <% end %>
     <tr>
       <td>
-        <%= select_tag "food-select", options_for_select(current_user.foods.collect { |f| ["#{f.name} / #{f.measurement_unit}", f.id] unless @recipe.foods.collect(&:id).include?(f.id) }.compact) %>
-      </td>
-      <td>
-        <%= number_field_tag("qtt-field", value=0, options = {step: 1}) %>
+        <% if @food_options.empty? %>
+          No food available to add
+        <% else %>
+          <%= select_tag "food-select", options_for_select(@food_options) %>
+        <% end %>
       </td>
       <td></td>
+      <td></td>
       <td>
-        <%= button_to "Add new ingredient", new_recipe_food_path , method: :get %>
+        <% if @food_options.empty? %>
+          <%= button_to "Add new ingredient", {}, :disabled => true %>
+        <% else %>
+          <%= button_to "Add new ingredient", new_recipe_food_path, method: :get %>
+        <% end %>
       </td>
     </tr>
   </tbody>
