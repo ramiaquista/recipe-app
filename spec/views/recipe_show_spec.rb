@@ -3,15 +3,16 @@ require 'rails_helper'
 RSpec.describe 'Recipe index', type: :system do
   describe 'Check the content' do
     before(:example) do
-      @user = User.new(name: "John", email: "john@mail.com", password: "qwe123")
+      @user = User.new(name: 'John', email: 'john@mail.com', password: 'qwe123')
       @user.save
-      @apple = @user.foods.new(name: "apple", measurement_unit: "unit", price: 4)
+      @apple = @user.foods.new(name: 'apple', measurement_unit: 'unit', price: 4)
       @apple.save
-      @wheat = @user.foods.new(name: "wheat", measurement_unit: "gram", price: 0.5)
+      @wheat = @user.foods.new(name: 'wheat', measurement_unit: 'gram', price: 0.5)
       @wheat.save
-      @sugar = @user.foods.new(name: "sugar", measurement_unit: "gram", price: 0.2)
+      @sugar = @user.foods.new(name: 'sugar', measurement_unit: 'gram', price: 0.2)
       @sugar.save
-      @recipe = Recipe.new(name: "apple pie", preparation_time: 30, cooking_time: 40, description: "lorem ipsum", public: true, user_id: @user.id)
+      @recipe = Recipe.new(name: 'apple pie', preparation_time: 30, cooking_time: 40, description: 'lorem ipsum',
+                           public: true, user_id: @user.id)
       @recipe.save
       @recipe.recipe_foods.new(quantity: 6, food_id: @apple.id)
       @recipe.save

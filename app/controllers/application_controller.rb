@@ -6,10 +6,10 @@ class ApplicationController < ActionController::Base
   protected
 
   def check_page
-    if params['action'] == 'index'
-      session[:current_recipe] = nil
-      session[:current_food_options] = nil
-    end
+    return unless params['action'] == 'index'
+
+    session[:current_recipe] = nil
+    session[:current_food_options] = nil
   end
 
   def after_sign_in_path_for(_resource)
