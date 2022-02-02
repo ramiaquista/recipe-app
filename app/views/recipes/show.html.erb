@@ -1,10 +1,8 @@
-<p style="color: green"><%= notice %></p>
-
 <%= render @recipe %>
 
 <div class="flex space-between">
   <%= button_to "Generate Shopping List", root_path %>
-  <%= button_to "Create New Food", new_food_path %>
+  <%= button_to "Create New Food", new_food_path, method: :get%>
 </div>
 <hr/>
 <table>
@@ -34,14 +32,14 @@
     <% end %>
     <tr>
       <td>
-        <%= select_tag "food-select", options_for_select(current_user.foods.collect { |f| ["#{f.name} / #{f.measurement_unit}", f.id] unless @foods_id_from_recipe.include?(f.id) }.compact) %>
+        <%= select_tag "food-select", options_for_select(current_user.foods.collect { |f| ["#{f.name} / #{f.measurement_unit}", f.id] unless @recipe.foods.collect(&:id).include?(f.id) }.compact) %>
       </td>
       <td>
         <%= number_field_tag("qtt-field", value=0, options = {step: 1}) %>
       </td>
       <td></td>
       <td>
-        <%= button_to "Add new ingredient" %>
+        <%= button_to "Add new ingredient", new_recipe_food_path , method: :get %>
       </td>
     </tr>
   </tbody>

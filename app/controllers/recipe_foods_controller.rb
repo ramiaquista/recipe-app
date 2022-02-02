@@ -25,7 +25,9 @@ class RecipeFoodsController < ApplicationController
 
     respond_to do |format|
       if @recipe_food.save
-        format.html { redirect_to recipe_food_url(@recipe_food), notice: 'Recipe food was successfully created.' }
+        format.html do
+          redirect_to recipe_path(id: @recipe_food.recipe_id), notice: 'Recipe food was successfully created.'
+        end
         format.json { render :show, status: :created, location: @recipe_food }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -65,6 +67,6 @@ class RecipeFoodsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def recipe_food_params
-    params.require(:recipe_food).permit(:recipe_id, :food_id)
+    params.require(:recipe_food).permit(:quantity, :recipe_id, :food_id)
   end
 end
