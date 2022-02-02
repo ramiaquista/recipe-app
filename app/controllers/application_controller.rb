@@ -1,8 +1,16 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
+  before_action :check_page
   before_action :update_allowed_parameters, if: :devise_controller?
 
   protected
+
+  def check_page
+    if params['action'] == 'index'
+      session[:current_recipe] = nil
+      session[:current_food_options] = nil
+    end
+  end
 
   def after_sign_in_path_for(_resource)
     recipes_path

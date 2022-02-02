@@ -1,13 +1,10 @@
 class RecipeFoodsController < ApplicationController
-  before_action :authenticate_user!
   load_and_authorize_resource
   before_action :set_recipe_food, only: %i[show edit update destroy]
 
   # GET /recipe_foods or /recipe_foods.json
   def index
     @recipe_foods = RecipeFood.includes(%i[recipe food]).all
-    session[:current_recipe] = nil
-    session[:current_food_options] = nil
   end
 
   # GET /recipe_foods/1 or /recipe_foods/1.json
