@@ -64,6 +64,11 @@ class RecipesController < ApplicationController
     end
   end
 
+  def public_recipes
+    @recipes = Recipe.includes(:user).where("user_id = #{current_user.id}").or(Recipe.where('public = true'))
+    print @recipes
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
