@@ -1,6 +1,6 @@
 # Recipe RoR Application
 
-> A Recipe List Application that allows user registration, creates recipes with already created available foods and shows a customized shopping list based on unavailable food from the recipe.
+> A Recipe List Application that allows user registration, creates recipes with already created (and available) foods and shows a customized shopping list based on necessary but unavailable food from the recipe.
 
 ## Built With
 
@@ -21,6 +21,22 @@ Postgresql >= 12.0
 - Install the `postgresql` database and all necessary dependencies (if you are on Ubuntu just run `sudo apt install postgresql postgresql-contrib`)
 - Run `rails db:create` to create the database locally or if already have one with the same name run `rails db:reset` instead
 - After installing everything, you can run now the website with `rails s`
+
+## Running linters
+- Rubocop (Ruby code linter)
+```
+rubocop
+```
+- Stylelint (CSS linter)
+```
+npx stylelint "**/*.{css,scss}"
+```
+
+## Testing
+- Using RSpec and Capybara
+``` 
+rspec spec/
+```
 
 ## Authors
 
