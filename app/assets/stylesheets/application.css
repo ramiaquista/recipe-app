@@ -70,6 +70,10 @@ nav ul {
   list-style: none;
 }
 
+li {
+  list-style-type: none;
+}
+
 nav li {
   display: inline-block;
   margin-left: 50px;
@@ -88,6 +92,10 @@ nav a {
   border: 0 !important;
 }
 
+.recipe-name > a {
+  text-decoration: none;
+}
+
 nav a:hover {
   text-decoration: underline;
 }
@@ -95,4 +103,30 @@ nav a:hover {
 .title-container {
   justify-content: space-between;
   align-items: center !important;
+}
+
+.column {
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  border: 2px solid black;
+  border-radius: 0.5rem;
+  padding: 0 1rem;
+  margin: 1rem 0;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.flex-title {
+  flex: 1;
+}
+
+.flex-desc {
+  flex: 1.5;
 }
