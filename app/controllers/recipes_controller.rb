@@ -68,6 +68,24 @@ class RecipesController < ApplicationController
     @recipes = Recipe.where("user_id = #{current_user.id}").or(Recipe.where('public = true'))
   end
 
+  def shopping_list
+    @recipe_hash = session[:current_recipe]
+    if @recipe_hash.nil?
+      @foods_id_from_recipe = []
+    else
+      # rubocop:disable Style/OpenStructUse
+      @r_object = OpenStruct.new(@recipe_hash)
+      @recipe = Recipe.includes(:foods, :recipe_foods).find(@r_object.id)
+      @foods_id_from_recipe = @recipe.foods.collect(&:id)
+      @total_price = 0
+      @recipe.recipe_foods.where(recipe_id: @recipe.id).each do |rf|
+        price = (rf.food.price * rf.quantity).round(2)
+        @total_price += price
+      end
+      # rubocop:enable Style/OpenStructUse
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
