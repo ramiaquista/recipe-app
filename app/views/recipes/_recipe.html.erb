@@ -1,0 +1,38 @@
+<div id="<%= dom_id recipe %>">
+  <h2>
+    <%= recipe.name %>
+  </h2>
+
+  <% unless current_page?(:controller => 'recipes', :action => 'index') || current_page?(:controller => 'recipes', :action => 'new') %>
+    <p>
+      <strong>Preparation time:</strong>
+      <% if recipe.preparation_time == 1 %>
+        <%= recipe.preparation_time %> minute
+      <% else %>
+        <%= recipe.preparation_time %> minutes
+      <% end %>
+    </p>
+  
+    <p>
+      <strong>Cooking time:</strong>
+      <% if recipe.cooking_time == 1 %>
+        <%= recipe.cooking_time %> minute
+      <% else %>
+        <%= recipe.cooking_time %> minutes
+      <% end %>
+    </p>
+  <% end %>
+
+  <p>
+    <strong>Description:</strong>
+    <%= recipe.description %>
+  </p>
+
+  <% unless current_page?(:controller => 'recipes', :action => 'index') %>
+    <p>
+      <strong>Public:</strong>
+      <%= check_box("public", recipe.id, {checked: recipe.public, disabled: true}) %>
+    </p>
+  <% end %>
+
+</div>

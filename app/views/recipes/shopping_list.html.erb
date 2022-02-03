@@ -1,0 +1,34 @@
+<% if @recipe.nil? %>
+<h1>Shopping List</h1>
+<% else %>
+<h1>Shopping List for <%= @recipe.name %></h1>
+<% end %>
+<% unless @foods_id_from_recipe.empty? %>
+<div class="title-container flex">
+  <h4>Amount of foods items to buy: <%= @foods_id_from_recipe.length %></h4>
+  <h4>Total value of food needed: <%= @total_price %></h4>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Total Price</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @recipe.recipe_foods.where(recipe_id: @recipe.id).each do |rf| %>
+    <tr>
+        <td><%= rf.food.name %></td>
+        <td><%= rf.quantity %> <%= rf.food.measurement_unit %></td>
+        <td>$ <%= (rf.food.price * rf.quantity).round(2) %></td>
+    <tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+  <h4>0 items to buy</h4>
+<% end %>
+
+

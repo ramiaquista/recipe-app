@@ -1,0 +1,21 @@
+<div class="title-container flex">
+  <h1>Public Recipes</h1>
+</div>
+
+<% unless @public_recipes.empty?%>
+  <div class="flex column">
+    <% @public_recipes.each do |recipe| %>
+      <div class="flex-row align-center">
+        <div class="flex-title">
+          <h3 class="recipe-name"><%= link_to recipe.name, recipe %></h4><p>By <%= recipe.user.name %></h3>
+        </div>
+        <div class="flex-desc">
+          <h5>Total food items: <%= (recipe.recipe_foods.collect { |rf| rf.quantity }).sum %></h5>
+          <h5>Total price: $ <%= (recipe.recipe_foods.includes(:food).collect { |rf| rf.quantity * rf.food.price }).sum.round(2) %></h5>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>No public recipes available</p>
+<% end %>

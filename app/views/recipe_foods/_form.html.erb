@@ -1,0 +1,44 @@
+<%= form_with(model: recipe_food) do |form| %>
+  <% if recipe_food.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(recipe_food.errors.count, "error") %> prohibited this recipe_food from being saved:</h2>
+
+      <ul>
+        <% recipe_food.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :quantity, style: "display: block" %>
+    <%= form.number_field :quantity %>
+  </div>
+
+  <div>
+    <%= form.label :recipe_id, style: "display: block" %>
+    <% if session[:current_recipe].nil? %>
+      <%= form.select :recipe_id, options_for_select(current_user.recipes.collect { |r| [r.name, r.id] }) %>
+    <% else %>
+      <%= form.select :recipe_id, options_for_select(current_user.recipes.collect { |r| [r.name, r.id] }, session[:current_recipe]['id']), {}, :disabled => true %>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :food_id, style: "display: block" %>
+    <% if session[:current_food_options].nil? %>
+      <%= form.select :food_id, options_for_select(current_user.foods.collect { |f| ["#{f.name} / #{f.measurement_unit}", f.id] }.compact) %>
+    <% else %>
+      <%= form.select :food_id, options_for_select(session[:current_food_options]) %>
+    <% end %>
+  </div>
+
+  <div>
+  <% if session[:current_recipe].nil? %>
+    <%= form.submit %>
+  <% else %>
+    <%= form.submit "Add food to the recipe" %>
+  <% end %>
+  </div>
+<% end %>
