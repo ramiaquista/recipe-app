@@ -19,7 +19,8 @@ Postgresql >= 12.0
 - Go to the cloned directory with `cd recipe-app`
 - Run `bundle install` to install the necessary packages
 - Install the `postgresql` database and all necessary dependencies (if you are on Ubuntu just run `sudo apt install postgresql postgresql-contrib`)
-- Run `rails db:create` to create the database locally or if already have one with the same name run `rails db:reset` instead
+- Run `rails db:create` and `rails db:migrate` to create the database locally
+  - If you already have one with the same name just run `rails db:reset` instead
 - After installing everything, you can run now the website with `rails s`
 
 ## Running linters
