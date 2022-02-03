@@ -11,7 +11,13 @@ apple = user.foods.create(name: "apple", measurement_unit: "unit", price: 4)
 wheat = user.foods.create(name: "wheat", measurement_unit: "gram", price: 0.5)
 sugar = user.foods.create(name: "sugar", measurement_unit: "gram", price: 0.2)
 user.save
-recipe = Recipe.create(name: "apple pie", preparation_time: 30, cooking_time: 40, description: "lorem ipsum", public: true, user_id: 1)
+recipe = Recipe.create(name: "apple pie", preparation_time: 30, cooking_time: 40, description: "lorem ipsum", public: true, user_id: user.id)
+recipe.recipe_foods.create(quantity: 6, food_id: apple.id)
+recipe.recipe_foods.create(quantity: 200, food_id: wheat.id)
 recipe.save
-recipe2 = Recipe.create(name: "apple candy", preparation_time: 10, cooking_time: 10, description: "candy", public: false, user_id: 1)
+recipe2 = Recipe.create(name: "apple candy", preparation_time: 10, cooking_time: 10, description: "candy", public: false, user_id: user.id)
+recipe2.recipe_foods.create(quantity: 1, food_id: apple.id)
+recipe2.recipe_foods.create(quantity: 100, food_id: sugar.id)
 recipe2.save
+user2 = User.create(name: "Maria", email: "maria@mail.com", password: "qwe123")
+user2.save

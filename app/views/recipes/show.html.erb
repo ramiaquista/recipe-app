@@ -1,10 +1,65 @@
-<p style="color: green"><%= notice %></p>
-
 <%= render @recipe %>
+
+<div class="flex space-between">
+  <%= button_to "Generate Shopping List", root_path %>
+  <%= button_to "Create New Food", new_food_path, method: :get%>
+</div>
+<hr/>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Total Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @recipe.recipe_foods.where(recipe_id: @recipe.id).each do |rf| %>
+      <tr>
+        <td><%= rf.food.name %></td>
+        <td><%= rf.quantity %> <%= rf.food.measurement_unit %></td>
+        <td>$ <%= (rf.food.price * rf.quantity).round(2) %></td>
+        <% if can? :manage, rf.food %>
+          <td class="flex btn-manage">
+            <%= button_to "Modify", edit_recipe_food_path(rf), method: :get %>
+            <%= button_to "Remove", rf, {
+              :method => :delete,
+              :onclick => "setTimeout(() => {
+                this.parentNode.parentNode.parentNode.remove();
+                document.getElementById('food-fb').innerText = 'There is food available to add';
+                document.getElementById('btn-add-food').disabled = false;
+                }, 100);"
+            } %>
+          </td>
+        <% else %>
+          <td> - </td>
+        <% end %>
+      </tr>
+    <% end %>
+    <tr>
+      <td>
+        <% if @current_food_options.empty? %>
+          <span id="food-fb">No food available to add</span>
+        <% else %>
+          <span id="food-fb">There is food available to add</span>
+        <% end %>
+      </td>
+      <td></td>
+      <td></td>
+      <td>
+        <% if @current_food_options.empty? %>
+          <%= button_to "Add new ingredient", new_recipe_food_path, { :id => "btn-add-food", :method => :get, :disabled => true } %>
+        <% else %>
+          <%= button_to "Add new ingredient", new_recipe_food_path, { :id => "btn-add-food", :method => :get } %>
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <div>
   <%= link_to "Edit this recipe", edit_recipe_path(@recipe) %> |
   <%= link_to "Back to recipes", recipes_path %>
-
   <%= button_to "Destroy this recipe", @recipe, method: :delete %>
 </div>

@@ -9,11 +9,11 @@
   </ul>
   </div>
   <div class="user-data">
-  <% if user_signed_in? %>
-    <%= current_user.name %>
-    <%= button_to 'Logout', destroy_user_session_path, method: :delete %>
-  <% else %>
-    <span>Guest</span>
-  <% end %>
+    <% if user_signed_in? %>
+      <%= current_user.name %>
+      <%= button_to 'Logout', destroy_user_session_path, method: :delete %>
+    <% else %>
+      <span>Guest</span>
+    <% end %>
   </div>
 </nav>

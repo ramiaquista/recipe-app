@@ -1,13 +1,22 @@
 class RecipesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_recipe, only: %i[show edit update destroy]
 
   # GET /recipes or /recipes.json
   def index
-    @recipes = Recipe.all
+    @recipes = current_user.recipes.all
   end
 
   # GET /recipes/1 or /recipes/1.json
-  def show; end
+  def show
+    @recipe = Recipe.includes(:foods, :recipe_foods).find(params[:id])
+    @foods_id_from_recipe = @recipe.foods.collect(&:id)
+    @current_food_options = current_user.foods.collect do |f|
+      ["#{f.name} / #{f.measurement_unit}", f.id] unless @recipe.foods.collect(&:id).include?(f.id)
+    end.compact
+    session[:current_recipe] = @recipe
+    session[:current_food_options] = @current_food_options
+  end
 
   # GET /recipes/new
   def new
@@ -19,7 +28,7 @@ class RecipesController < ApplicationController
 
   # POST /recipes or /recipes.json
   def create
-    @recipe = Recipe.new recipe_params.merge(user_id: current_user.id)
+    @recipe = Recipe.new(recipe_params.merge(user_id: current_user.id))
 
     respond_to do |format|
       if @recipe.save

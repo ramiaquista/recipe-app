@@ -49,9 +49,12 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 group :development, :test do
+  gem 'bullet'
+  gem 'capybara'
+  gem 'rspec-rails'
+  gem 'webdrivers'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
-  gem 'rspec-rails', '~> 5.0.0'
 end
 
 group :development do
@@ -67,13 +70,11 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem 'capybara'
+  # gem 'capybara'
   gem 'selenium-webdriver'
-  gem 'webdrivers'
+  # gem 'webdrivers'
 end
 
-gem 'rubocop', '>= 1.0', '< 2.0'
-
-gem 'devise'
-
 gem 'cancancan'
+gem 'devise'
+gem 'rubocop', '>= 1.0', '< 2.0'
