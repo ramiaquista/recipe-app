@@ -65,7 +65,7 @@ class RecipesController < ApplicationController
   end
 
   def public_recipes
-    @recipes = Recipe.where("user_id = #{current_user.id}").or(Recipe.where('public = true'))
+    @public_recipes = Recipe.includes(:user, :recipe_foods).where('public = true').order(created_at: :desc)
   end
 
   private

@@ -21,3 +21,5 @@ recipe2.recipe_foods.create(quantity: 100, food_id: sugar.id)
 recipe2.save
 user2 = User.create(name: "Maria", email: "maria@mail.com", password: "qwe123")
 user2.save
+recipe = Recipe.create(name: "Some recipe", preparation_time: 10, cooking_time: 10, description: "testing", public: false, user_id: user2.id)
+recipe.save

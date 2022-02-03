@@ -6,7 +6,7 @@
   <% @recipes.each do |recipe| %>
     <div class="flex-row align-center">
       <div class="flex-title">
-        <h2 class="recipe-name"><%= link_to recipe.name, recipe %></h2>
+        <h3 class="recipe-name"><%= link_to recipe.name, recipe %></h2>
         <%= button_to "REMOVE", @recipe, method: :delete %>
       </div>
       <div class="flex-desc">
