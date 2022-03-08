@@ -1,6 +1,6 @@
 # Recipe RoR Application
 
-> A Recipe List Application that allows user registration, creates recipes with already created (and available) foods and shows a customized shopping list based on necessary but unavailable food from the recipe.
+> A Recipe List Application that allows user registration, creates recipes with already created (and available) foods and shows a customized shopping list based on necessary but unavailable food from the recipe. ( Test Username: mat@gmail.com - Password: 123456 )
 
 ## Built With
 
